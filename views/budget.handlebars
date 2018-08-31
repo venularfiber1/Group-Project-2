@@ -1,0 +1,167 @@
+
+<!-- Start of the Main Container -->
+<div class="container">
+  <!-- Jumbotron -->
+  <div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h1 class="display-4">Budget Minder</h1>
+      <p class="lead">Help track your monthly budget. Add an expense or income source to get started.</p>
+      <!-- Handlebars integration for the user name - which is an email address -->
+      <h6>Welcome: {{user.id}}</h6>
+      <button type="button" class="btn btn-primary"><i class="fas fa-sign-out-alt"></i> Logout</button>
+    </div>
+  </div>
+  <!-- Row for buttons that will add expense or income -->
+  <div class="row">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addExpense"><i class="fas fa-plus"></i> Expense</button>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addIncome"><i class="fas fa-plus"></i> Income</button>
+  </div>
+  <br>
+
+  <!-- Row for the 3 Graphs from Chart.js -->
+  <div class="row">
+    <!-- Div for the Income/Expense Pie Chart -->
+    <div class="col-md-4">
+
+    </div>
+    <!-- Div for the Income Graph -->
+    <div class="col-md-4">
+
+    </div>
+    <!-- Div for the Expenses Graph -->
+    <div class="col-md-4">
+
+    </div>
+  </div>
+  <br>
+  
+  <!-- Table for Income -->
+  <div class="card">
+    <div class="card-header">
+      <h3>Income</h3>
+    </div>
+    <div class="card-body">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Source</th>
+            <th scope="col">Category</th>
+            <th scope="col">Amount</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Handlebars integration for income -->
+          {{#each income}}
+          <tr>
+            <td> {{this.source}} </td>
+            <td> {{this.category}} </td>
+            <td> {{this.amount}} </td>
+            <td> <button type="button" data-incomeid="{{this.id}}" class="btn btn-primary">Delete <i class="fas fa-trash"></i></button> </td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <br>
+
+  <!-- Table for Expenses -->
+  <div class="card">
+    <div class="card-header">
+      <h3>Expenses</h3>
+    </div>
+    <div class="card-body">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Source</th>
+            <th scope="col">Category</th>
+            <th scope="col">Amount</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Handlebars integration for expenses -->
+          {{#each expense}}
+          <tr>
+            <td> {{this.source}} </td>
+            <td> {{this.category}} </td>
+            <td> {{this.amount}} </td>
+            <td> <button type="button" data-expenseid="{{this.id}}" class="btn btn-primary">Delete <i class="fas fa-trash"></i></button> </td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for Add Expenses -->
+<div class="modal" id="addExpense" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add Expense</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="exampleFormControlInput1">Source</label>
+            <input class="form-control" type="text" placeholder="To Who?" required>
+          </div>
+          <div class="form-group">
+            <label for="exampleFormControlInput1">Category</label>
+            <input class="form-control" type="text" placeholder="What Category?" required>
+          </div>
+          <div class="form-group">
+            <label for="exampleFormControlInput1">Amount Due</label>
+            <input class="form-control" type="number" placeholder="150.00" required min="0" step=".01">
+          </div>
+          <button type="button" class="btn btn-primary">Save Expense</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal for Add Income -->
+<div class="modal" id="addIncome" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add Income</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="exampleFormControlInput1">Source</label>
+            <input class="form-control" type="text" placeholder="From Where?" required>
+          </div>
+          <div class="form-group">
+            <label for="exampleFormControlInput1">Category</label>
+            <input class="form-control" type="text" placeholder="What Category?" required>
+          </div>
+          <div class="form-group">
+            <label for="exampleFormControlInput1">Amount Gained</label>
+            <input class="form-control" type="number" placeholder="150.00" required min="0" step=".01">
+          </div>
+          <button type="button" class="btn btn-primary">Save Income</button>
+        </form>
+     </div>
+    </div>
+  </div>
+</div>
+
+
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="/js/index.js"></script>
+
+
