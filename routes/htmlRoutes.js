@@ -5,6 +5,10 @@ module.exports = function (app) {
   app.get("/", function (req, res) {
     res.render("index", {});
   });
+  app.get("/budget", function (req, res) {
+    res.render("budget", {});
+  });
+
 
   // Load example page and pass in an example by id
   app.get("/budget/:id", function (req, res) {

@@ -2,20 +2,21 @@ var db = require("../models");
 
 module.exports = function(app) {
   // Get all examples
-  app.get("/api/expenses", function(req, res) {
-    db.Expenses.findAll({}).then(function(dbExpenses) {
-      res.json(dbExpenses);
+  app.get("/api/expense", function(req, res) {
+    db.Expense.findAll({}).then(function(dbExpense) {
+      res.json(dbExpense);
+      console.log(dbExpense);
     });
   });
-  app.get("/app/expenses/:category", function(req, res){
-    db.Expenses.findOne({
-      where:{
-        category: req.params.category
-      },
-    }).then(function(dbExpenses){
-      res.json(dbExpenses);
-    });
-  });
+  // app.get("/app/expense/:category", function(req, res){
+  //   db.Expenses.findOne({
+  //     where:{
+  //       category: req.params.category
+  //     },
+  //   }).then(function(dbExpenses){
+  //     res.json(dbExpenses);
+  //   });
+  // });
   // Create a new example
   // app.post("/api/expenses", function(req, res) {
   //   db.Example.create(req.body).then(function(dbExample) {

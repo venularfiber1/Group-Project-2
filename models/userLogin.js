@@ -1,6 +1,6 @@
 module.exports = function (sequelize, DataTypes) {
   // ------for userlogin table----
-  var userLogin = sequelize.define("userLogin", {
+  var UserLogin = sequelize.define("UserLogin", {
     id: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -26,12 +26,12 @@ module.exports = function (sequelize, DataTypes) {
   });
 
 
-  userLogin.associate = function (models) {
-    userLogin.belongsTo(models.income, {
+  UserLogin.associate = function (models) {
+    UserLogin.belongsTo(models.UserLogin, {
       foreignKey: {
         allowNull: false
       }
     });
   };
-  return userLogin;
+  return UserLogin;
 };
