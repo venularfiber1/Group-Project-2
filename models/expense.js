@@ -1,50 +1,44 @@
 module.exports = function (sequelize, DataTypes) {
-  var Expense = sequelize.define("Expense", {
-    // id: {
-    //   type: DataTypes.INTEGER,
-    //   allowNull: false,
-    //   primaryKey: true,
-    //   validate: {
-    //     len: [1]
-    //   }
-    // },
-
-    source: {
-      type: DataTypes.TEXT,
+  var Expenses = sequelize.define("Expenses", {
+    id: {
+      type: DataTypes.INTEGER,
       allowNull: false,
-      validate: {
-        len: [1]
-      }
+      primaryKey: true,
+      autoIncrement: true
     },
-
+    source: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     category: {
       type: DataTypes.STRING,
-      defaultValue: "House"
+      allowNull: false,
     },
-
     amount: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      validate: {
-        len: [1]
-      }
     },
-
     userID: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      validate: {
-        len: [1]
-      }
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      defaultValue: sequelize.fn('NOW'),
+      notNull: true
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      defaultValue: sequelize.fn('NOW'),
+      notNull: true
     }
-
   });
 
-  Expense.associate = function (models) {
-    Expense.hasMany(models.Expense, {
+  Expenses.associate = function (models) {
+    Expenses.hasMany(models.Expenses, {
       onDelete: "cascade"
     });
   };
 
-  return Expense;
+  return Expenses;
 };

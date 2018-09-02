@@ -25,7 +25,9 @@ app.set("view engine", "handlebars");
 // Routes
 
 require("./routes/expensesApiRoutes")(app);
+require("./routes/incomeApiRoutes")(app);
 require("./routes/htmlRoutes")(app);
+
 
 var syncOptions = { force: false };
 

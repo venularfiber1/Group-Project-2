@@ -1,6 +1,6 @@
 module.exports = function (sequelize, DataTypes) {
-  // ------for userlogin table----
-  var UserLogin = sequelize.define("UserLogin", {
+  // ------for userlogins table----
+  var UserLogins = sequelize.define("UserLogin", {
     id: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -26,12 +26,12 @@ module.exports = function (sequelize, DataTypes) {
   });
 
 
-  UserLogin.associate = function (models) {
-    UserLogin.belongsTo(models.UserLogin, {
-      foreignKey: {
-        allowNull: false
-      }
-    });
-  };
-  return UserLogin;
+  // UserLogins.associate = function (models) {
+  //   UserLogins.belongsTo(models.UserLogins, {
+  //     foreignKey: {
+  //       allowNull: false
+  //     }
+  //   });
+  // };
+  return UserLogins;
 };

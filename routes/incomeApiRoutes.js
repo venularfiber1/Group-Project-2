@@ -1,19 +1,55 @@
-var db =require("../models");
+var db = require("../models");
 
-module.exports = function(app) {
-  app.get("/api/income", function(req, res) {
-    db.Income.findAll({}).then(function(dbIncome){
-      res.json(dbIncome);
+module.exports = function (app) {
+  app.get("/api/incomes/detail/:userID", function (req, res) {
+    // ------------to find all(All the incomes with the same user)--------
+    db.Incomes.findAll({
+      where: {
+        userID: req.params.userID
+      }
+    }).then(function (dbIncomes) {
+      res.json(dbIncomes);
+      console.log(dbIncomes);
     });
   });
-  app.get("/app/income/:category", function(req, res){
-    db.Income.hasMany({
-      where:{
-        category: req.params.category
-      },
-    }).then(function(dbIncome){
-      res.json(dbIncome);
+
+
+  // ------------to find all(All the incomes with the same user)--------
+  app.get("/api/incomes", function (req, res) {
+      db.Incomes.findAll({}).then(function (dbIncomes) {
+      res.json(dbIncomes);
+      console.log(dbIncomes);
     });
+  });
+
+  //------API route for all userID total incomes----------
+
+  app.get("/api/incomes/total/:userID", function (req, res) {
+    db.Incomes.findAll({
+      attributes: [[db.sequelize.fn('SUM', db.sequelize.col('amount')), 'tot_amt']],
+      where: {
+        userID: req.params.userID
+      }
+    }).then(function (sum) {
+      res.json(sum);
+      console.log(sum);
+    });
+
+  });
+
+  // -----API route for the Categorywise incomes-------
+  app.get("/api/incomes/summary/:userID", function (req, res) {
+    db.Incomes.findAll({
+      attributes: ['category', [db.sequelize.fn('SUM', db.sequelize.col('amount')), 'tot_amt']],
+      where: {
+        userID: req.params.userID
+      },
+      group: 'category'
+    }).then(function (sum) {
+      res.json(sum);
+      console.log(sum);
+    });
+
   });
 };
 
