@@ -1,44 +1,44 @@
 module.exports = function (sequelize, DataTypes) {
-  var Income = sequelize.define("Income", {
+  var Incomes = sequelize.define("Incomes", {
     id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
-      validate: {
-        len: [1]
-      }
+      autoIncrement: true
     },
     source: {
       type: DataTypes.TEXT,
-      allowNull: false,
-      validate: {
-        len: [1]
-      }
+      allowNull: false
     },
     category: {
       type: DataTypes.STRING,
+      allowNull: false
     },
     amount: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      validate: {
-        len: [1]
-      }
     },
     userID: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      validate: {
-        len: [1]
-      }
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      defaultValue: sequelize.fn('NOW'),
+      notNull: true
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      defaultValue: sequelize.fn('NOW'),
+      notNull: true
     }
   });
 
-  Income.associate = function (models) {
-    Income.hasMany(models.Income, {
+  Incomes.associate = function (models) {
+    Incomes.hasMany(models.Incomes, {
       onDelete: "cascade"
     });
   };
 
-  return Income;
+  return Incomes;
 };
