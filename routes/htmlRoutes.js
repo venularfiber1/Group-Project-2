@@ -29,11 +29,6 @@ module.exports = function (app) {
     res.render("budget", {});
   });
 
-  app.get("/budget", function (req, res) {
-    res.render("budget", {});
-  });
-
-
   // Load example page and pass in an example by id
   app.get("/budget/:id", function (req, res) {
     db.Customer.findOne({ where: { id: req.params.id } }).then(function (dbExample) {

@@ -40,8 +40,7 @@ module.exports = function (app) {
   app.get("/api/user_data", function (req, res) {
     if (!req.user) {
     // The user is not logged in, send back an empty object res.json({});
-    }
-    else {
+    } else {
     // Otherwise send back the user's email and id
     // Sending back a password, even a hashed password, isn't a good idea
       res.json({
@@ -49,6 +48,6 @@ module.exports = function (app) {
         id: req.user.id
       });
     }
-});
+  });
 
 };
