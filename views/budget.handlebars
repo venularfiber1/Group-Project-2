@@ -7,17 +7,17 @@
         <h1 class="display-4">Budget Minder</h1>
         <p class="lead">Help track your monthly budget. Add an expense or income source to get started.</p>
         <!-- Handlebars integration for the user name - which is an email address -->
-        <h3><strong>Welcome:</strong> {{user.id}}</h3>
+        <h3><strong>Welcome:</strong> <span class="member-name"></span></h3>
         <br>
-        <button type="button" class="btn btn-info"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        <a href="/"><button type="button" class="btn btn-info"><i class="fas fa-sign-out-alt"></i> Logout</button></a>
       </div>
     </div>
   </div>
   <!-- Row for buttons that will add expense or income -->
   <div class="row" id="addingButtons">
-    <button type="button" class="btn btn-success btn-lg" id="expenseButton" data-toggle="modal" data-target="#addExpense"><i class="fas fa-plus"></i>
+    <button type="button" class="btn btn-danger btn-lg" id="expenseButton" data-toggle="modal" data-target="#addExpense"><i class="fas fa-plus"></i>
       Expense</button>
-    <button type="button" class="btn btn-danger btn-lg" id="incomeButton" data-toggle="modal" data-target="#addIncome"><i class="fas fa-plus"></i>
+    <button type="button" class="btn btn-success btn-lg" id="incomeButton" data-toggle="modal" data-target="#addIncome"><i class="fas fa-plus"></i>
       Income</button>
   </div>
   <br>
