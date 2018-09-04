@@ -1,11 +1,19 @@
-<div id="home">
-  <div class="jumbotron jumbotron-fluid">
-    <div class="container">
-      <h1 class="display-4">Budget Minder</h1>
-      <p class="lead">Help track your monthly budget. Sign-up or Log-in to get started.</p>
-      <div class="row">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginScreen"><i class="fas fa-user"></i> Log-in</button>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createAccount"><i class="fas fa-user-plus"></i> Create Account</button>
+<div class="container">
+  <div id="home">
+    <div class="jumbotron jumbotron-fluid col-md-12">
+      <div class="container">
+        <div class="col-md-8">
+          <h1 class="display-4">Budget Minder</h1>
+          <p class="lead">Help track your monthly budget. Sign-up or Log-in to get started.</p>
+          <div style="text-align:center">
+            <button type="button" class="btn btn-info" id="loginButton" data-toggle="modal" data-target="#loginScreen"><i
+                class="fas fa-user"></i>
+              Log-in</button>
+            <button type="button" class="btn btn-info" id="createAccountButton" data-toggle="modal" data-target="#createAccount"><i
+                class="fas fa-user-plus"></i>
+              Create Account</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -13,7 +21,7 @@
 
 <!-- Modal for Create Account -->
 <div class="modal" id="createAccount" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Create Account</h5>
@@ -32,7 +40,7 @@
             <label for="exampleInputPassword1">Password</label>
             <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" required>
           </div>
-          <button type="submit" class="btn btn-primary">Submit <i class="fas fa-arrow-right"></i></button>
+          <button type="submit" class="btn btn-info">Submit <i class="fas fa-arrow-right"></i></button>
         </form>
       </div>
     </div>
@@ -41,7 +49,7 @@
 
 <!-- Modal for Log-in -->
 <div class="modal" id="loginScreen" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Log-in</h5>
@@ -60,7 +68,7 @@
             <label for="exampleInputPassword1">Password</label>
             <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" required>
           </div>
-          <button type="submit" class="btn btn-primary">Submit <i class="fas fa-arrow-right"></i></button>
+          <button type="submit" class="btn btn-info">Submit <i class="fas fa-arrow-right"></i></button>
         </form>
       </div>
     </div>
