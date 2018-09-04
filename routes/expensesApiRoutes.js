@@ -72,4 +72,29 @@ module.exports = function (app) {
       res.json(dbExpenses);
     });
   });
+
+  app.post("/api/expenses/", function(req, res){
+    db.Expenses.create({
+      source: req.body.source,
+      category: req.body.category,
+      amount: req.body.amount,
+      email: req.body.email
+    }).then(function(dbExpenses){
+      res.json(dbExpenses);
+    });    
+  });
+
+  app.get("/api/expenses/:id", function (req, res) {
+    db.Expenses.findOne({
+      where: {
+        id: req.params.id
+      }
+    }).then(function (dbExpense) {
+      res.json(dbExpense);
+    });
+  });
+
+
 };
+
+

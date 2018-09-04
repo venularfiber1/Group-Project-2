@@ -34,7 +34,6 @@ module.exports = function (app) {
       res.json(sum);
       console.log(sum);
     });
-
   });
 
   // -----API route for the Categorywise incomes-------
@@ -80,5 +79,28 @@ module.exports = function (app) {
       res.json(dbIncomes);
     });
   });
+
+  app.post("/api/incomes/", function(req, res){
+    db.Incomes.create({
+      source: req.body.source,
+      category: req.body.category,
+      amount: req.body.amount,
+      email: req.body.email
+    }).then(function(dbIncomes){
+      res.json(dbIncomes);
+    });    
+  });
+
+  app.get("/api/incomes/:id", function (req, res) {
+    db.Incomes.findOne({
+      where: {
+        id: req.params.id
+      }
+    }).then(function (dbIncome) {
+      res.json(dbIncome);
+    });
+  });
+
+
 };
 

@@ -61,7 +61,7 @@
             <td> {{this.source}} </td>
             <td> {{this.category}} </td>
             <td> {{this.amount}} </td>
-            <td> <button type="button" data-incomeid="{{this.id}}" class="btn btn-primary">Delete <i class="fas fa-trash"></i></button>
+            <td> <button type="button" data-incomeid="{{this.id}}" class="deleteIncome btn btn-primary">Delete <i class="fas fa-trash"></i></button>
               </td>
           </tr>
           {{/each}}
@@ -93,7 +93,7 @@
             <td> {{this.source}} </td>
             <td> {{this.category}} </td>
             <td> {{this.amount}} </td>
-            <td> <button type="button" data-expenseid="{{this.id}}" class="btn btn-warning">Delete <i class="fas fa-trash"></i></button>
+            <td> <button type="button" data-expenseid="{{this.id}}" class="deleteExpense btn btn-warning">Delete <i class="fas fa-trash"></i></button>
               </td>
           </tr>
           {{/each}}
@@ -114,20 +114,20 @@
         </button>
       </div>
       <div class="modal-body">
-        <form>
+        <form id="expense">
           <div class="form-group">
             <label for="exampleFormControlInput1">Source</label>
-            <input class="form-control" type="text" placeholder="To Who?" required>
+            <input class="form-control" id="expense-source" type="text" placeholder="To Who?" required>
           </div>
           <div class="form-group">
             <label for="exampleFormControlInput1">Category</label>
-            <input class="form-control" type="text" placeholder="What Category?" required>
+            <input class="form-control" id="expense-category" type="text" placeholder="What Category?" required>
           </div>
           <div class="form-group">
             <label for="exampleFormControlInput1">Amount Due</label>
-            <input class="form-control" type="number" placeholder="150.00" required min="0" step=".01">
+            <input class="form-control" id="expense-amount" type="number" placeholder="150.00" required min="0" step=".01">
           </div>
-          <button type="submit" class="btn btn-info">Save Expense</button>
+          <button type="submit" class="btn btn-info" id="submit-expense">Save Expense</button>
         </form>
       </div>
     </div>
@@ -145,20 +145,20 @@
         </button>
       </div>
       <div class="modal-body">
-        <form>
+        <form id="income">
           <div class="form-group">
             <label for="exampleFormControlInput1">Source</label>
-            <input class="form-control" type="text" placeholder="From Where?" required>
+            <input class="form-control" id="income-source" type="text" placeholder="From Where?" required>
           </div>
           <div class="form-group">
             <label for="exampleFormControlInput1">Category</label>
-            <input class="form-control" type="text" placeholder="What Category?" required>
+            <input class="form-control" id="income-category" type="text" placeholder="What Category?" required>
           </div>
           <div class="form-group">
             <label for="exampleFormControlInput1">Amount Gained</label>
-            <input class="form-control" type="number" placeholder="150.00" required min="0" step=".01">
+            <input class="form-control" id="income-amount" type="number" placeholder="150.00" required min="0" step=".01">
           </div>
-          <button type="submit" class="btn btn-info">Save Income</button>
+          <button type="submit" class="btn btn-info" id="submit-income">Save Income</button>
         </form>
       </div>
     </div>

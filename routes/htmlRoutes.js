@@ -15,7 +15,7 @@ module.exports = function (app) {
     res.render("index", {});
   });
 
-  app.get("/login", function(req, res) {
+  app.get("/login", function (req, res) {
     // If the user already has an account send them to the members page
     if (req.user) {
       res.redirect("/budget");
@@ -25,17 +25,17 @@ module.exports = function (app) {
 
   // Here we've add our isAuthenticated middleware to this route.
   // If a user who is not logged in tries to access this route they will be redirected to the signup page
-  app.get("/budget", isAuthenticated, function(req, res) {
-    res.render("budget", {});
-  });
-
-  // Load example page and pass in an example by id
-  app.get("/budget/:id", function (req, res) {
-    db.Customer.findOne({ where: { id: req.params.id } }).then(function (dbExample) {
-      res.render("budget", {
-        example: dbExample
-      });
-    });
+  app.get("/budget", isAuthenticated, function (req, res) {
+    db.Expenses.findAll({ where: { email: req.user.email }
+    }).then(function (dbExpense) {
+      db.Incomes.findAll({ where: { email: req.user.email } 
+      }).then(function (dbIncome) {
+        res.render("budget", {
+          expense: dbExpense,
+          income: dbIncome
+        });
+      })
+    })
   });
 
   // Render 404 page for any unmatched routes
