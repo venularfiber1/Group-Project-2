@@ -1,99 +1,105 @@
-// Get references to page elements
-var $exampleText = $("#example-text");
-var $exampleDescription = $("#example-description");
-var $submitBtn = $("#submit");
-var $exampleList = $("#example-list");
+var emailForm = $(".member-name")
 
-// The API object contains methods for each kind of request we'll make
-var API = {
-  saveExample: function(example) {
-    return $.ajax({
-      headers: {
-        "Content-Type": "application/json"
-      },
-      type: "POST",
-      url: "api/examples",
-      data: JSON.stringify(example)
-    });
-  },
-  getExamples: function() {
-    return $.ajax({
-      url: "api/examples",
-      type: "GET"
-    });
-  },
-  deleteExample: function(id) {
-    return $.ajax({
-      url: "api/examples/" + id,
-      type: "DELETE"
-    });
-  }
-};
+var expenseSource = $("input#expense-source");
+var expenseCategory = $("input#expense-category");
+var expenseAmount = $("input#expense-amount");
+var expenseSubmitBtn = $("#submit-expense")
 
-// refreshExamples gets new examples from the db and repopulates the list
-var refreshExamples = function() {
-  API.getExamples().then(function(data) {
-    var $examples = data.map(function(example) {
-      var $a = $("<a>")
-        .text(example.text)
-        .attr("href", "/example/" + example.id);
+var incomeSource = $("input#income-source");
+var incomeCategory = $("input#income-category");
+var incomeAmount = $("input#income-amount");
+var incomeSubmitBtn = $("#submit-income")
 
-      var $li = $("<li>")
-        .attr({
-          class: "list-group-item",
-          "data-id": example.id
-        })
-        .append($a);
+var deleteExpenseBtn = $(".deleteExpense");
+var deleteIncomeBtn = $(".deleteIncome");
 
-      var $button = $("<button>")
-        .addClass("btn btn-danger float-right delete")
-        .text("ｘ");
-
-      $li.append($button);
-
-      return $li;
-    });
-
-    $exampleList.empty();
-    $exampleList.append($examples);
-  });
-};
-
-// handleFormSubmit is called whenever we submit a new example
-// Save the new example to the db and refresh the list
-var handleFormSubmit = function(event) {
+var handleExpenseSubmit = function (event) {
   event.preventDefault();
 
-  var example = {
-    text: $exampleText.val().trim(),
-    description: $exampleDescription.val().trim()
-  };
-
-  if (!(example.text && example.description)) {
+  if (!(expenseSource && expenseCategory && expenseAmount)) {
     alert("You must enter an example text and description!");
     return;
   }
 
-  API.saveExample(example).then(function() {
-    refreshExamples();
-  });
+  var expense = {
+    source: expenseSource.val().trim(),
+    category: expenseCategory.val().trim(),
+    amount: expenseAmount.val().trim(),
+    email: emailForm.text()
+  };
 
-  $exampleText.val("");
-  $exampleDescription.val("");
+  submitExpense(expense)
+
+  expenseSource.val("");
+  expenseCategory.val("");
+  expenseAmount.val("");
 };
 
-// handleDeleteBtnClick is called when an example's delete button is clicked
-// Remove the example from the db and refresh the list
-var handleDeleteBtnClick = function() {
-  var idToDelete = $(this)
-    .parent()
-    .attr("data-id");
+var handleIncomeSubmit = function (event) {
+  event.preventDefault();
 
-  API.deleteExample(idToDelete).then(function() {
-    refreshExamples();
-  });
+  if (!(incomeSource && incomeCategory && incomeAmount)) {
+    alert("You must enter an example text and description!");
+    return;
+  }
+
+  var income = {
+    source: incomeSource.val().trim(),
+    category: incomeCategory.val().trim(),
+    amount: incomeAmount.val().trim(),
+    email: emailForm.text()
+  };
+
+  submitIncome(income)
+
+  incomeSource.val("");
+  incomeCategory.val("");
+  incomeAmount.val("");
 };
 
-// Add event listeners to the submit and delete buttons
-$submitBtn.on("click", handleFormSubmit);
-$exampleList.on("click", ".delete", handleDeleteBtnClick);
+function submitExpense(Expense) {
+  $.post("/api/expenses/", Expense, function () {
+    window.location.href = "/budget";
+  })
+}
+
+function submitIncome(Income) {
+  $.post("/api/incomes/", Income, function () {
+    window.location.href = "/budget";
+  })
+}
+
+function handleExpenseDelete() {
+  var currentExpense = $(this).attr("data-expenseid")
+  deleteExpense(currentExpense);
+  window.location.href = "/budget";
+}
+
+function handleIncomeDelete() {
+  var currentIncome = $(this).attr("data-incomeid")
+  deleteIncome(currentIncome);
+  window.location.href = "/budget";
+}
+
+function deleteExpense(id) {
+  $.ajax({
+    method: "DELETE",
+    url: "/api/expenses/" + id
+  })
+    .then(function() {
+    });
+}
+
+function deleteIncome(id) {
+  $.ajax({
+    method: "DELETE",
+    url: "/api/incomes/" + id
+  })
+    .then(function() {
+    });
+}
+
+expenseSubmitBtn.on("click", handleExpenseSubmit);
+incomeSubmitBtn.on("click", handleIncomeSubmit);
+deleteExpenseBtn.on("click", handleExpenseDelete);
+deleteIncomeBtn.on("click", handleIncomeDelete);
