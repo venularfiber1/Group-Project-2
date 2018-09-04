@@ -51,5 +51,34 @@ module.exports = function (app) {
     });
 
   });
+
+
+
+  // -----POST route for new income source the same user-----
+
+
+  app.post("/api/create", function(req, res){
+    console.log(req.body);
+    db.Incomes.create({
+      source: req.body.source,
+      category: req.body.category,
+      amount: req.body.amount,
+      userID: req.body.userID
+    }).then(function(dbIncomes){
+      res.json(dbIncomes);
+    });    
+  });
+
+  // --------DELETE route to Delete an income item by id
+  app.delete("/api/incomes/:id", function(req,res){
+    console.log(req.params.id);
+    db.Incomes.destroy({
+      where: {
+        id:req.params.id
+      }
+    }).then(function(dbIncomes){
+      res.json(dbIncomes);
+    });
+  });
 };
 

@@ -47,4 +47,29 @@ module.exports = function (app) {
         console.log(sum);
       });
   });
+
+  // -----POST route for new expenses source for the same user-----
+  app.post("/api/create", function(req, res){
+    console.log(req.body);
+    db.Expenses.create({
+      source: req.body.source,
+      category: req.body.category,
+      amount: req.body.amount,
+      userID: req.body.userID
+    }).then(function(dbExpenses){
+      res.json(dbExpenses);
+    });    
+  });
+
+  // --------DELETE route to Delete Expenses by id
+  app.delete("/api/expenses/:id", function(req,res){
+    console.log(req.params.id);
+    db.Expenses.destroy({
+      where: {
+        id:req.params.id
+      }
+    }).then(function(dbExpenses){
+      res.json(dbExpenses);
+    });
+  });
 };
