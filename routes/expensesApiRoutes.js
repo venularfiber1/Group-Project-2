@@ -10,11 +10,11 @@ module.exports = function (app) {
   });
 
   // -----API route for the Categorywise expenses-------
-  app.get("/api/expenses/summary/:userID", function (req, res) {
+  app.get("/api/expenses/summary/:email", function (req, res) {
     db.Expenses.findAll({
       attributes: ['category', [db.sequelize.fn('SUM', db.sequelize.col('amount')), 'tot_amt']],
       where: {
-        userID: req.params.userID
+        email: req.params.email
       },
       group: 'category'
     }).then(function (sum) {

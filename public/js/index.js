@@ -184,10 +184,10 @@ var incomeBorderColor = []
 var getIncome = function () {
   $.get("/api/user_data").then(function (data) {
     email = data.email;
-    $.get("/api/incomes/detail/" + email).then(function (datatwo) {
+    $.get("/api/incomes/summary/" + email).then(function (datatwo) {
       for (i = 0; i < datatwo.length; i++) {
-        incomeLabels.push(datatwo[i].source);
-        incomeData.push(datatwo[i].amount);
+        incomeLabels.push(datatwo[i].category);
+        incomeData.push(datatwo[i].tot_amt);
         incomeBackgroundColor.push(setBackgroundColor[i % setBackgroundColor.length]);
         incomeBorderColor.push(setBorderColor[i % setBorderColor.length]);
       }
@@ -225,11 +225,11 @@ var expenseBorderColor = [];
 var getExpense = function () {
   $.get("/api/user_data").then(function (data) {
     email = data.email;
-    $.get("/api/expenses/detail/" + email).then(function (datatwo) {
+    $.get("/api/expenses/summary/" + email).then(function (datatwo) {
       console.log(datatwo)
       for (i = 0; i < datatwo.length; i++) {
-        expenseLabels.push(datatwo[i].source);
-        expenseData.push(datatwo[i].amount);
+        expenseLabels.push(datatwo[i].category);
+        expenseData.push(datatwo[i].tot_amt);
         expenseBackgroundColor.push(setBackgroundColor[i % setBackgroundColor.length]);
         expenseBorderColor.push(setBorderColor[i % setBorderColor.length]);
       }
