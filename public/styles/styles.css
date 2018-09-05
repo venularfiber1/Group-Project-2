@@ -54,3 +54,9 @@ h2 {
   font-family: 'Nunito', sans-serif;
   font-weight: bold;
 }
+
+h3 {
+  font-family: 'Nunito', sans-serif;
+  font-weight: bold;
+  text-align: center;
+}
