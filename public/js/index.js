@@ -86,7 +86,7 @@ function deleteExpense(id) {
     method: "DELETE",
     url: "/api/expenses/" + id
   })
-    .then(function() {
+    .then(function () {
     });
 }
 
@@ -95,7 +95,7 @@ function deleteIncome(id) {
     method: "DELETE",
     url: "/api/incomes/" + id
   })
-    .then(function() {
+    .then(function () {
     });
 }
 
@@ -105,29 +105,66 @@ deleteExpenseBtn.on("click", handleExpenseDelete);
 deleteIncomeBtn.on("click", handleIncomeDelete);
 
 
-
-
 // CHART FOR THE NET DIFFERENCE
-var ctx = $("#myChartNet");
-var myDoughnutChart = new Chart(ctx, {
-  type: "doughnut",
-  data: {
-    labels: ["Income", "Expense"],
-    datasets: [{
-      label: "# of Votes",
-      data: [19, 12],
-      backgroundColor: [
-        "rgba(75, 192, 192, 1)",
-        "rgba(255,99,132,1)"],
-    }]
-  },
-  options: { }
-});
+var ctxOne = $("#myChartNet");
+netDataSet = [];
+
+var getNetData = function () {
+  $.get("/api/user_data").then(function (data) {
+    email = data.email;
+    $.get("/api/expenses/total/" + email).then(function (datatwo) {
+      netDataSet.push(datatwo[0].tot_amt);
+      // console.log(datatwo[0].tot_amt);
+      console.log(netDataSet)
+      $.get("/api/incomes/total/" + email).then(function (datathree) {
+        netDataSet.push(datathree[0].tot_amt);
+        console.log(netDataSet)
+        new Chart(ctxOne, {
+          type: "horizontalBar",
+          data: {
+            labels: ["Expense", "Income"],
+            datasets: [{
+              data: [netDataSet[0], netDataSet[2]],
+              backgroundColor: [
+                "rgba(75, 192, 192, 1)",
+                "rgba(255,99,132,1)"],
+            }]
+          },
+          options: {
+            legend: {
+              display: false,
+            },
+            title: {
+              display: true,
+              text: 'Expenses vs. Income'
+            },
+            scales: {
+              xAxes: [{
+                ticks: {
+                  beginAtZero: true
+                }
+              }]
+            }
+          }
+        });
+        $("#netDollars").text(netDataSet[2] - netDataSet[0])
+      });
+    });
+  });
+}
+
+getNetData();
+
+var incomeLabels = [];
+var incomeDatasets = []
+
+var expenseLabels = [];
+var expenseDatasets = []
 
 // CHART FOR INCOME
-var ctx = $("#myChartIncome");
-var myIncomeChart = new Chart(ctx, {
-  type: "bar",
+var ctxTwo = $("#myChartIncome");
+var myIncomeChart = new Chart(ctxTwo, {
+  type: "doughnut",
   data: {
     labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
     datasets: [{
@@ -156,7 +193,7 @@ var myIncomeChart = new Chart(ctx, {
     scales: {
       yAxes: [{
         ticks: {
-          beginAtZero:true
+          beginAtZero: true
         }
       }]
     }
@@ -164,9 +201,9 @@ var myIncomeChart = new Chart(ctx, {
 });
 
 // CHART FOR EXPENSES
-var ctx = $("#myChartExpense");
-var myExpenseChart = new Chart(ctx, {
-  type: "bar",
+var ctxThree = $("#myChartExpense");
+var myExpenseChart = new Chart(ctxThree, {
+  type: "doughnut",
   data: {
     labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
     datasets: [{
@@ -195,7 +232,7 @@ var myExpenseChart = new Chart(ctx, {
     scales: {
       yAxes: [{
         ticks: {
-          beginAtZero:true
+          beginAtZero: true
         }
       }]
     }
