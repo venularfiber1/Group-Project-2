@@ -15,7 +15,7 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false
     },
     amount: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.DECIMAL,
       allowNull: false,
     },
     email: {
@@ -24,12 +24,12 @@ module.exports = function (sequelize, DataTypes) {
     },
     createdAt: {
       type: DataTypes.DATE,
-      defaultValue: sequelize.fn('NOW'),
+      defaultValue: sequelize.fn("NOW"),
       notNull: true
     },
     updatedAt: {
       type: DataTypes.DATE,
-      defaultValue: sequelize.fn('NOW'),
+      defaultValue: sequelize.fn("NOW"),
       notNull: true
     }
   });

@@ -3,12 +3,12 @@ var emailForm = $(".member-name")
 var expenseSource = $("input#expense-source");
 var expenseCategory = $("input#expense-category");
 var expenseAmount = $("input#expense-amount");
-var expenseSubmitBtn = $("#submit-expense")
+var expenseSubmitBtn = $("#submit-expense");
 
 var incomeSource = $("input#income-source");
 var incomeCategory = $("input#income-category");
 var incomeAmount = $("input#income-amount");
-var incomeSubmitBtn = $("#submit-income")
+var incomeSubmitBtn = $("#submit-income");
 
 var deleteExpenseBtn = $(".deleteExpense");
 var deleteIncomeBtn = $(".deleteIncome");
