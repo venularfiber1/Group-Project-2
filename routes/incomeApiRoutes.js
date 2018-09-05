@@ -1,19 +1,6 @@
 var db = require("../models");
 
 module.exports = function (app) {
-  app.get("/api/incomes/detail/:userID", function (req, res) {
-    // ------------to find all(All the incomes with the same user)--------
-    db.Incomes.findAll({
-      where: {
-        userID: req.params.userID
-      }
-    }).then(function (dbIncomes) {
-      res.json(dbIncomes);
-      console.log(dbIncomes);
-    });
-  });
-
-
   // ------------to find all(All the incomes with the same user)--------
   app.get("/api/incomes", function (req, res) {
     db.Incomes.findAll({}).then(function (dbIncomes) {
@@ -99,5 +86,14 @@ module.exports = function (app) {
     });
   });
 
+  app.get("/api/incomes/detail/:email", function (req, res) {
+    db.Incomes.findAll({
+      where: {
+        email: req.params.email
+      }
+    }).then(function (dbIncomes) {
+      res.json(dbIncomes);
+      console.log(dbIncomes);
+    });
+  });
 };
-

@@ -115,16 +115,17 @@ var getNetData = function () {
     $.get("/api/expenses/total/" + email).then(function (datatwo) {
       netDataSet.push(datatwo[0].tot_amt);
       // console.log(datatwo[0].tot_amt);
-      console.log(netDataSet)
       $.get("/api/incomes/total/" + email).then(function (datathree) {
+        // console.log(datathree[0].tot_amt);
         netDataSet.push(datathree[0].tot_amt);
-        console.log(netDataSet)
+        // console.log(netDataSet)
         new Chart(ctxOne, {
           type: "horizontalBar",
           data: {
-            labels: ["Expense", "Income"],
+            labels: ["Expenses", "Income"],
             datasets: [{
-              data: [netDataSet[0], netDataSet[2]],
+              // data: [netDataSet[0], netDataSet[2]],
+              data: netDataSet,
               backgroundColor: [
                 "rgba(75, 192, 192, 1)",
                 "rgba(255,99,132,1)"],
@@ -134,10 +135,10 @@ var getNetData = function () {
             legend: {
               display: false,
             },
-            title: {
-              display: true,
-              text: 'Expenses vs. Income'
-            },
+            // title: {
+            //   display: true,
+            //   text: 'Expenses vs. Income'
+            // },
             scales: {
               xAxes: [{
                 ticks: {
@@ -147,7 +148,7 @@ var getNetData = function () {
             }
           }
         });
-        $("#netDollars").text(netDataSet[2] - netDataSet[0])
+        $("#netDollars").text(netDataSet[1] - netDataSet[0])
       });
     });
   });
@@ -155,86 +156,103 @@ var getNetData = function () {
 
 getNetData();
 
-var incomeLabels = [];
-var incomeDatasets = []
-
-var expenseLabels = [];
-var expenseDatasets = []
-
 // CHART FOR INCOME
+var setBackgroundColor = [
+  "rgba(255, 99, 132, 0.2)",
+  "rgba(54, 162, 235, 0.2)",
+  "rgba(255, 206, 86, 0.2)",
+  "rgba(75, 192, 192, 0.2)",
+  "rgba(153, 102, 255, 0.2)",
+  "rgba(255, 159, 64, 0.2)"
+]
+
+var setBorderColor = [
+  "rgba(255,99,132,1)",
+  "rgba(54, 162, 235, 1)",
+  "rgba(255, 206, 86, 1)",
+  "rgba(75, 192, 192, 1)",
+  "rgba(153, 102, 255, 1)",
+  "rgba(255, 159, 64, 1)"
+]
+
 var ctxTwo = $("#myChartIncome");
-var myIncomeChart = new Chart(ctxTwo, {
-  type: "doughnut",
-  data: {
-    labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-    datasets: [{
-      label: "",
-      data: [12, 19, 3, 5, 2, 3],
-      backgroundColor: [
-        "rgba(255, 99, 132, 0.2)",
-        "rgba(54, 162, 235, 0.2)",
-        "rgba(255, 206, 86, 0.2)",
-        "rgba(75, 192, 192, 0.2)",
-        "rgba(153, 102, 255, 0.2)",
-        "rgba(255, 159, 64, 0.2)"
-      ],
-      borderColor: [
-        "rgba(255,99,132,1)",
-        "rgba(54, 162, 235, 1)",
-        "rgba(255, 206, 86, 1)",
-        "rgba(75, 192, 192, 1)",
-        "rgba(153, 102, 255, 1)",
-        "rgba(255, 159, 64, 1)"
-      ],
-      borderWidth: 1
-    }]
-  },
-  options: {
-    scales: {
-      yAxes: [{
-        ticks: {
-          beginAtZero: true
+var incomeLabels = [];
+var incomeData = [];
+var incomeBackgroundColor = [];
+var incomeBorderColor = []
+
+var getIncome = function () {
+  $.get("/api/user_data").then(function (data) {
+    email = data.email;
+    $.get("/api/incomes/detail/" + email).then(function (datatwo) {
+      for (i = 0; i < datatwo.length; i++) {
+        incomeLabels.push(datatwo[i].source);
+        incomeData.push(datatwo[i].amount);
+        incomeBackgroundColor.push(setBackgroundColor[i % setBackgroundColor.length]);
+        incomeBorderColor.push(setBorderColor[i % setBorderColor.length]);
+      }
+      new Chart(ctxTwo, {
+        type: "doughnut",
+        data: {
+          labels: incomeLabels,
+          datasets: [{
+            label: "",
+            data: incomeData,
+            backgroundColor: incomeBackgroundColor,
+            borderColor: incomeBorderColor,
+            borderWidth: 1
+          }]
+        },
+        options: {
+          legend: {
+            display: false,
+          }
         }
-      }]
-    }
-  }
-});
+      });
+    });
+  });
+}
+
+getIncome();
 
 // CHART FOR EXPENSES
 var ctxThree = $("#myChartExpense");
-var myExpenseChart = new Chart(ctxThree, {
-  type: "doughnut",
-  data: {
-    labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-    datasets: [{
-      label: "",
-      data: [12, 19, 3, 5, 2, 3],
-      backgroundColor: [
-        "rgba(255, 99, 132, 0.2)",
-        "rgba(54, 162, 235, 0.2)",
-        "rgba(255, 206, 86, 0.2)",
-        "rgba(75, 192, 192, 0.2)",
-        "rgba(153, 102, 255, 0.2)",
-        "rgba(255, 159, 64, 0.2)"
-      ],
-      borderColor: [
-        "rgba(255,99,132,1)",
-        "rgba(54, 162, 235, 1)",
-        "rgba(255, 206, 86, 1)",
-        "rgba(75, 192, 192, 1)",
-        "rgba(153, 102, 255, 1)",
-        "rgba(255, 159, 64, 1)"
-      ],
-      borderWidth: 1
-    }]
-  },
-  options: {
-    scales: {
-      yAxes: [{
-        ticks: {
-          beginAtZero: true
+var expenseLabels = [];
+var expenseData = [];
+var expenseBackgroundColor = [];
+var expenseBorderColor = [];
+
+var getExpense = function () {
+  $.get("/api/user_data").then(function (data) {
+    email = data.email;
+    $.get("/api/expenses/detail/" + email).then(function (datatwo) {
+      console.log(datatwo)
+      for (i = 0; i < datatwo.length; i++) {
+        expenseLabels.push(datatwo[i].source);
+        expenseData.push(datatwo[i].amount);
+        expenseBackgroundColor.push(setBackgroundColor[i % setBackgroundColor.length]);
+        expenseBorderColor.push(setBorderColor[i % setBorderColor.length]);
+      }
+      new Chart(ctxThree, {
+        type: "doughnut",
+        data: {
+          labels: expenseLabels,
+          datasets: [{
+            label: "",
+            data: expenseData,
+            backgroundColor: expenseBackgroundColor,
+            borderColor: expenseBorderColor,
+            borderWidth: 1
+          }]
+        },
+        options: {
+          legend: {
+            display: false,
+          }
         }
-      }]
-    }
-  }
-});
+      });
+    });
+  });
+};
+
+getExpense();
