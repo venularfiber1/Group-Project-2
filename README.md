@@ -4,9 +4,9 @@
 
 ## Screenshot
 
-![Budget Minder](public/images/Capture.png)
-![Budget Minder](public/images/Capture2.png)
-![Budget Minder](public/images/Capture3.png)
+![Budget Minder](public/assets/images/Capture.png)
+![Budget Minder](public/assets/images/Capture2.png)
+![Budget Minder](public/assets/images/Capture3.png)
 
 ## Technologies Used
  * HTML
