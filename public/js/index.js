@@ -59,26 +59,26 @@ var handleIncomeSubmit = function (event) {
 
 function submitExpense(Expense) {
   $.post("/api/expenses/", Expense, function () {
-    window.location.href = "/budget";
+    window.location.reload();
   })
 }
 
 function submitIncome(Income) {
   $.post("/api/incomes/", Income, function () {
-    window.location.href = "/budget";
+    window.location.reload();
   })
 }
 
 function handleExpenseDelete() {
   var currentExpense = $(this).attr("data-expenseid")
   deleteExpense(currentExpense);
-  window.location.href = "/budget";
+  window.location.reload();
 }
 
 function handleIncomeDelete() {
   var currentIncome = $(this).attr("data-incomeid")
   deleteIncome(currentIncome);
-  window.location.href = "/budget";
+  window.location.reload();
 }
 
 function deleteExpense(id) {
@@ -112,17 +112,17 @@ netDataSet = [];
 var getNetData = function () {
   $.get("/api/user_data").then(function (data) {
     email = data.email;
-    $.get("/api/expenses/total/" + email).then(function (datatwo) {
+    $.get("/api/incomes/total/" + email).then(function (datatwo) {
       netDataSet.push(datatwo[0].tot_amt);
       // console.log(datatwo[0].tot_amt);
-      $.get("/api/incomes/total/" + email).then(function (datathree) {
+      $.get("/api/expenses/total/" + email).then(function (datathree) {
         // console.log(datathree[0].tot_amt);
         netDataSet.push(datathree[0].tot_amt);
         // console.log(netDataSet)
         new Chart(ctxOne, {
           type: "horizontalBar",
           data: {
-            labels: ["Expenses", "Income"],
+            labels: ["INCOME", "EXPENSES"],
             datasets: [{
               // data: [netDataSet[0], netDataSet[2]],
               data: netDataSet,
@@ -148,7 +148,7 @@ var getNetData = function () {
             }
           }
         });
-        $("#netDollars").text(netDataSet[1] - netDataSet[0])
+        $("#netDollars").text(netDataSet[0] - netDataSet[1])
       });
     });
   });
