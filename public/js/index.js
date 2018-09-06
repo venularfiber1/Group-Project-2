@@ -148,7 +148,7 @@ var getNetData = function () {
             }
           }
         });
-        $("#netDollars").text(netDataSet[0] - netDataSet[1])
+        $("#netDollars").text(netDataSet[0] - netDataSet[1]).toFixed(2);
       });
     });
   });
