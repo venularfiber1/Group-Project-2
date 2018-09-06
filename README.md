@@ -5,6 +5,7 @@
 ## Screenshot
 
 ![Budget Minder](public/images/Capture.PNG)
+<br>
 ![Budget Minder](public/images/Capture2.PNG)
 ![Budget Minder](public/images/Capture3.PNG)
 
